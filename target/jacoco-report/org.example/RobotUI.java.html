@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RobotUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">robot-simulator</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">RobotUI.java</span></div><h1>RobotUI.java</h1><pre class="source lang-java linenums">package org.example;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class RobotUI extends JPanel {
+    private final Robot robot;
+<span class="fc" id="L8">    private final int cellSize = 50;</span>
+    private final int gridSize;
+
+<span class="fc" id="L11">    public RobotUI(Robot robot, int gridSize) {</span>
+<span class="fc" id="L12">        this.robot = robot;</span>
+<span class="fc" id="L13">        this.gridSize = gridSize;</span>
+<span class="fc" id="L14">        JFrame frame = new JFrame(&quot;Robot Simulator&quot;);</span>
+<span class="fc" id="L15">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L16">        frame.setSize(gridSize * cellSize + 50, gridSize * cellSize + 80);</span>
+<span class="fc" id="L17">        frame.add(this);</span>
+<span class="fc" id="L18">        frame.setVisible(true);</span>
+<span class="fc" id="L19">    }</span>
+
+    @Override
+    protected void paintComponent(Graphics g) {
+<span class="fc" id="L23">        super.paintComponent(g);</span>
+<span class="fc" id="L24">        g.setColor(Color.WHITE);</span>
+<span class="fc" id="L25">        g.fillRect(0, 0, gridSize * cellSize, gridSize * cellSize);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        for (int i = 0; i &lt; gridSize; i++) {</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">            for (int j = 0; j &lt; gridSize; j++) {</span>
+<span class="fc" id="L28">                g.setColor(Color.LIGHT_GRAY);</span>
+<span class="fc" id="L29">                g.drawRect(j * cellSize, (gridSize - 1 - i) * cellSize, cellSize, cellSize);</span>
+
+<span class="fc bfc" id="L31" title="All 2 branches covered.">                if (robot.getMap()[i][j] == 1) {</span>
+<span class="fc" id="L32">                    g.setColor(Color.BLACK);</span>
+<span class="fc" id="L33">                    g.fillRect(j * cellSize + 10, (gridSize - 1 - i) * cellSize + 10, cellSize - 20, cellSize - 20);</span>
+                }
+            }
+        }
+<span class="fc" id="L37">        int robotX = robot.getX() * cellSize;</span>
+<span class="fc" id="L38">        int robotY = (gridSize - 1 - robot.getY()) * cellSize;</span>
+<span class="fc" id="L39">        g.setColor(Color.RED);</span>
+<span class="fc" id="L40">        g.fillOval(robotX + 5, robotY + 5, cellSize - 10, cellSize - 10);</span>
+<span class="fc" id="L41">        drawArrow(g, robotX + cellSize / 2, robotY + cellSize / 2, robot.getDirection());</span>
+<span class="fc" id="L42">    }</span>
+
+    private void drawArrow(Graphics g, int x, int y, DirectionEnum direction) {
+<span class="fc" id="L45">        Graphics2D g2 = (Graphics2D) g;</span>
+<span class="fc" id="L46">        g2.setColor(Color.ORANGE);</span>
+<span class="fc" id="L47">        g2.setStroke(new BasicStroke(3));</span>
+<span class="fc" id="L48">        int arrowSize = 10;</span>
+<span class="fc" id="L49">        int[] xPoints = new int[3];</span>
+<span class="fc" id="L50">        int[] yPoints = new int[3];</span>
+
+<span class="pc bpc" id="L52" title="2 of 5 branches missed.">        switch (direction) {</span>
+            case NORTH:
+<span class="fc" id="L54">                xPoints = new int[]{x, x - arrowSize, x + arrowSize};</span>
+<span class="fc" id="L55">                yPoints = new int[]{y - arrowSize, y + arrowSize, y + arrowSize};</span>
+<span class="fc" id="L56">                break;</span>
+            case EAST:
+<span class="fc" id="L58">                xPoints = new int[]{x + arrowSize, x - arrowSize, x - arrowSize};</span>
+<span class="fc" id="L59">                yPoints = new int[]{y, y - arrowSize, y + arrowSize};</span>
+<span class="fc" id="L60">                break;</span>
+            case SOUTH:
+<span class="nc" id="L62">                xPoints = new int[]{x, x - arrowSize, x + arrowSize};</span>
+<span class="nc" id="L63">                yPoints = new int[]{y + arrowSize, y - arrowSize, y - arrowSize};</span>
+<span class="nc" id="L64">                break;</span>
+            case WEST:
+<span class="fc" id="L66">                xPoints = new int[]{x - arrowSize, x + arrowSize, x + arrowSize};</span>
+<span class="fc" id="L67">                yPoints = new int[]{y, y - arrowSize, y + arrowSize};</span>
+                break;
+        }
+
+<span class="fc" id="L71">        g2.fillPolygon(xPoints, yPoints, 3);</span>
+<span class="fc" id="L72">    }</span>
+
+    public void updateUI() {
+<span class="fc" id="L75">        repaint();</span>
+<span class="fc" id="L76">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

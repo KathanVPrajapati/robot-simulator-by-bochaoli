@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">robot-simulator</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">CommandHandler.java</span></div><h1>CommandHandler.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class CommandHandler {
+    private Robot robot;
+    private List&lt;String&gt; commandsHistory;
+
+<span class="fc" id="L11">    public CommandHandler() {</span>
+<span class="fc" id="L12">        commandsHistory = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L13">    }</span>
+
+//    public CommandHandler(Integer size) {
+//        this.robot = new Robot(size);
+//        commandsHistory = new ArrayList&lt;&gt;();
+//    }
+
+
+    public Robot getRobot() {
+<span class="fc" id="L22">        return robot;</span>
+    }
+
+//    public void setRobot(Robot robot) {
+//        this.robot = robot;
+//    }
+
+    public void handleCommand(String command) {
+<span class="fc" id="L30">        commandsHistory.add(command);</span>
+<span class="fc" id="L31">        executeCommand(command);</span>
+<span class="fc" id="L32">        robot.updateUI();</span>
+<span class="fc" id="L33">    }</span>
+
+    public void executeCommand(String command) {
+<span class="fc" id="L36">        String SPACE = &quot; &quot;;</span>
+<span class="fc" id="L37">        String commandAction = command.split(SPACE)[0].toUpperCase();</span>
+<span class="pc bpc" id="L38" title="3 of 11 branches missed.">        switch (commandAction) {</span>
+            case &quot;I&quot;:
+<span class="fc" id="L40">                robot = new Robot(Integer.parseInt(command.split(SPACE)[1]));</span>
+<span class="fc" id="L41">                break;</span>
+            case &quot;D&quot;:
+<span class="fc" id="L43">                robot.downPen();</span>
+<span class="fc" id="L44">                break;</span>
+            case &quot;U&quot;:
+<span class="fc" id="L46">                robot.upPen();</span>
+<span class="fc" id="L47">                break;</span>
+            case &quot;M&quot;:
+<span class="fc" id="L49">                int steps = Integer.parseInt(command.split(SPACE)[1]);</span>
+<span class="fc" id="L50">                robot.move(steps);</span>
+<span class="fc" id="L51">                break;</span>
+            case &quot;L&quot;:
+<span class="fc" id="L53">                robot.turnLeft();</span>
+<span class="fc" id="L54">                break;</span>
+            case &quot;R&quot;:
+<span class="fc" id="L56">                robot.turnRight();</span>
+<span class="fc" id="L57">                break;</span>
+            case &quot;C&quot;:
+<span class="fc" id="L59">                robot.showStatus();</span>
+<span class="fc" id="L60">                break;</span>
+            case &quot;P&quot;:
+<span class="fc" id="L62">                robot.printMap();</span>
+<span class="fc" id="L63">                break;</span>
+            case &quot;H&quot;:
+<span class="nc" id="L65">                commandsHistory.remove(commandsHistory.size() - 1);</span>
+<span class="nc" id="L66">                replayHistory();</span>
+<span class="nc" id="L67">                break;</span>
+            case &quot;Q&quot;:
+<span class="nc" id="L69">                System.out.println(&quot;Exiting program.&quot;);</span>
+<span class="nc" id="L70">                System.exit(0);</span>
+<span class="nc" id="L71">                break;</span>
+            default:
+<span class="nc" id="L73">                System.out.println(&quot;Invalid command.&quot;);</span>
+                break;
+        }
+<span class="fc" id="L76">    }</span>
+
+    private void replayHistory() {
+<span class="nc" id="L79">        System.out.println(&quot;Replaying history...&quot;);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        for (String cmd : commandsHistory) {</span>
+<span class="nc" id="L81">            System.out.println(&quot;&gt; &quot; + cmd);</span>
+<span class="nc" id="L82">            executeCommand(cmd);</span>
+        }
+<span class="nc" id="L84">    }</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L87">        Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L88">        CommandHandler processor = new CommandHandler();</span>
+<span class="nc" id="L89">        while (true) {</span>
+<span class="nc" id="L90">            System.out.print(&quot;&gt; Enter command: &quot;);</span>
+<span class="nc" id="L91">            String command = scanner.nextLine().trim();</span>
+<span class="nc" id="L92">            processor.handleCommand(command);</span>
+
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

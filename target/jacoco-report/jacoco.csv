@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+robot-simulator,org.example,RobotUI,41,321,2,9,3,45,2,9,0,4
+robot-simulator,org.example,Robot,44,180,13,8,6,43,11,19,1,17
+robot-simulator,org.example,DirectionEnum,0,77,0,0,0,11,0,5,0,5
+robot-simulator,org.example,CommandHandler,64,86,5,8,18,29,6,11,2,4
