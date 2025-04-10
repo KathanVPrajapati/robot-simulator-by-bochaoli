@@ -51,4 +51,59 @@ class RobotTest {
         robot.turnLeft();
         assertEquals(DirectionEnum.WEST, robot.getDirection());
     }
+    
+    @Test
+    void testTurnLeftAllDirections() {
+        // Test for NORTH direction
+        robot.setDirection(DirectionEnum.NORTH);
+        robot.turnLeft();
+        assertEquals(DirectionEnum.WEST, robot.getDirection());
+        
+        // Test for EAST direction
+        robot.setDirection(DirectionEnum.EAST);
+        robot.turnLeft();
+        assertEquals(DirectionEnum.NORTH, robot.getDirection());
+        
+        // Test for SOUTH direction
+        robot.setDirection(DirectionEnum.SOUTH);
+        robot.turnLeft();
+        assertEquals(DirectionEnum.EAST, robot.getDirection());
+        
+        // Test for WEST direction
+        robot.setDirection(DirectionEnum.WEST);
+        robot.turnLeft();
+        assertEquals(DirectionEnum.SOUTH, robot.getDirection());
+    }
+
+    @Test
+    void testTurnRightAllDirections() {
+        // Test for NORTH direction
+        robot.setDirection(DirectionEnum.NORTH);
+        robot.turnRight();
+        assertEquals(DirectionEnum.EAST, robot.getDirection());
+        
+        // Test for EAST direction
+        robot.setDirection(DirectionEnum.EAST);
+        robot.turnRight();
+        assertEquals(DirectionEnum.SOUTH, robot.getDirection());
+        
+        // Test for SOUTH direction
+        robot.setDirection(DirectionEnum.SOUTH);
+        robot.turnRight();
+        assertEquals(DirectionEnum.WEST, robot.getDirection());
+        
+        // Test for WEST direction
+        robot.setDirection(DirectionEnum.WEST);
+        robot.turnRight();
+        assertEquals(DirectionEnum.NORTH, robot.getDirection());
+    }
+
+    @Test
+    void testMoveAtBoundary() {
+        robot.setPosition(4, 0);  // Set robot at the boundary (rightmost column)
+        robot.setDirection(DirectionEnum.EAST);
+        robot.move(1);  // Attempt to move East, but should hit boundary
+        assertEquals(4, robot.getX());  // X should remain at boundary
+        assertEquals(0, robot.getY());
+    }
 }

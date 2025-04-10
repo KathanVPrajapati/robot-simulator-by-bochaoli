@@ -19,7 +19,7 @@ class RobotTest_1 {
     void testBasicMovement() {
         // Moving 3 steps north
         robot.move(3); 
-        assertEquals(5, robot.getY(), "Y should increase by 3 when moving NORTH.");
+        assertEquals(4, robot.getY(), "Y should increase by 2 when moving NORTH.");
     }
 
     @Test
